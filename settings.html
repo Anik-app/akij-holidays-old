@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Settings — Akij Holidays</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<style>
+  .setting-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .setting-grid.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .status-line { display: flex; align-items: center; gap: 10px; font-size: 13.5px; margin-bottom: 10px; }
+  code { background: var(--surface-2); padding: 2px 8px; border-radius: 5px; font-family: var(--font-mono); font-size: 12.5px; word-break: break-all; }
+  .help {
+    background: var(--info-soft);
+    border-left: 3px solid var(--info);
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .help ol { margin: 6px 0 0 20px; padding: 0; }
+  .help li { margin-bottom: 4px; }
+  .card-h { color: var(--primary); font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+  .card-h .badge { margin-left: auto; font-size: 10.5px; }
+
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+  .step {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step::before {
+    content: counter(step);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .step h4 { margin: 0 0 4px; font-size: 14px; font-weight: 600; color: var(--text); }
+  .step p  { margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+  .step p a { color: var(--accent); font-weight: 600; }
+  .step .step-body { min-width: 0; }
+  .step pre {
+    background: #0d1017;
+    color: #d4d4dc;
+    padding: 12px 14px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.55;
+    max-height: 240px;
+    margin: 8px 0 0;
+    white-space: pre;
+  }
+  .danger-zone {
+    border: 1px solid rgba(198, 40, 40, .28);
+    background: var(--danger-soft);
+  }
+  .danger-zone .card-h { color: var(--danger); }
+
+  .env-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 13px;
+  }
+  .env-row:last-child { border-bottom: none; }
+  .env-row .k { color: var(--text-muted); font-weight: 600; }
+  .env-row .v { font-family: var(--font-mono); color: var(--text); word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div id="mainOutlet">
+  <div class="mb-2">
+    <h2 class="section-title">⚙️ Settings — Cloud &amp; Configuration</h2>
+    <p class="section-sub">Set up automatic Google-Sheet logging and GitHub cloud storage. Everything you save from any maker page will sync to both places automatically.</p>
+  </div>
+
+  <div class="setting-grid">
+
+    <!-- Google Sheets: FULL step-by-step -->
+    <div class="card">
+      <h3 class="card-h">📊 Google Sheets — Automatic Logging <span id="gsBadge" class="badge badge-local">Not configured</span></h3>
+
+      <p style="font-size:13.5px;color:var(--text-muted);margin:0 0 14px;line-height:1.55;">
+        When enabled, every document you save is automatically appended to your Google Sheet — with per-type tabs
+        (Invoices, Vouchers, Airline Tickets, Ticket Invoices). Duplicate document IDs are updated in place.
+      </p>
+
+      <div class="row mb-2">
+        <a class="btn btn-accent btn-sm" id="gsOpen" href="#" target="_blank" rel="noopener">📄 Open Target Google Sheet ↗</a>
+        <button class="btn btn-ghost btn-sm" id="gsCopyScript" type="button">📋 Copy Apps Script code</button>
+        <button class="btn btn-ghost btn-sm" id="gsToggleCode" type="button">👁 Show / Hide Script</button>
+      </div>
+
+      <ol class="steps" id="steps">
+        <li class="step"><div class="step-body">
+          <h4>Open your Google Sheet</h4>
+          <p>Click <strong>Open Target Google Sheet</strong> above (it opens
+             <code>Akij Holidays</code> in a new tab). Sign in with your Google account if prompted.</p>
+        </div></li>
+        <li class="step"><div class="step-body">
+          <h4>Open the Apps Script editor</h4>
+          <p>In the sheet, go to <strong>Extensions → Apps Script</strong>. A new editor tab opens.</p>
+        </div></li>
+        <li class="step"><div class="step-body">
+          <h4>Paste the logger script</h4>
+          <p>Delete anything in <code>Code.gs</code>, click <strong>Copy Apps Script code</strong> above,
+             paste it, and press <strong>Ctrl/Cmd + S</strong> to save. Name the project any name you like.</p>
+          <pre id="gsCode" style="display:none;"></pre>
+        </div></li>
+        <li class="step"><div class="step-body">
+          <h4>Deploy as a Web App</h4>
+          <p>In the Apps Script editor, click <strong>Deploy → New deployment</strong>. Set:</p>
+          <p style="margin-top:4px;">• Type: <strong>Web app</strong> &nbsp;·&nbsp;
+             Execute as: <strong>Me</strong> &nbsp;·&nbsp;
+             Who has access: <strong>Anyone</strong></p>
+          <p>Click <strong>Deploy</strong>, authorize when prompted, and copy the resulting URL
+             (looks like <code>https://script.google.com/macros/s/AKfyc…/exec</code>).</p>
+        </div></li>
+        <li class="step"><div class="step-body">
+          <h4>Paste the URL into <code>config.js</code></h4>
+          <p>Open <code>config.js</code> in your project folder and paste the URL:</p>
+          <pre style="max-height:auto;">APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfyc…/exec",</pre>
+          <p>Refresh this page. The badge above should turn <span class="badge badge-ok">✓ Connected</span>.</p>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="setting-grid two">
+      <!-- GitHub Cloud Storage -->
+      <div class="card">
+        <h3 class="card-h">☁️ GitHub Cloud Storage <span id="ghBadge" class="badge badge-local">Not configured</span></h3>
+
+        <div class="help">
+          <strong>How to enable:</strong>
+          <ol>
+            <li>Create a repo on GitHub (public or private).</li>
+            <li>Generate a <strong>fine-grained Personal Access Token</strong>: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+            <li>Repository access → <em>Only select repositories</em> → pick your repo.</li>
+            <li>Repository permissions → <strong>Contents: Read and write</strong>.</li>
+            <li>Copy the token and paste below.</li>
+          </ol>
+          Every saved document is pushed to <code>Documents/&lt;Type&gt;/&lt;YYYY&gt;/&lt;MM&gt;/&lt;number&gt;.json</code>.
+        </div>
+
+        <div class="form-group"><label>Owner (username or org)</label><input id="ghOwner" placeholder="yourname" autocomplete="username" /></div>
+        <div class="form-group"><label>Repository name</label><input id="ghRepo" placeholder="akij-holidays" autocomplete="off" /></div>
+        <div class="form-group"><label>Branch</label><input id="ghBranch" placeholder="main" value="main" autocomplete="off" /></div>
+        <div class="form-group"><label>Base folder</label><input id="ghBase" placeholder="Documents" value="Documents" autocomplete="off" /></div>
+        <div class="form-group">
+          <label>Personal Access Token</label>
+          <input id="ghToken" type="password" placeholder="github_pat_…" autocomplete="new-password" />
+          <div class="hint">Stored only in this browser's localStorage. Never transmitted anywhere except <code>api.github.com</code>.</div>
+        </div>
+        <div class="row mt-1">
+          <button class="btn btn-primary btn-sm" id="ghSave" type="button">💾 Save &amp; Test</button>
+          <button class="btn btn-ghost btn-sm" id="ghClear" type="button">🗑 Clear</button>
+        </div>
+      </div>
+
+      <!-- Company Info -->
+      <div class="card">
+        <h3 class="card-h">🏢 Company Info</h3>
+        <p class="text-muted" style="font-size:12.5px;margin:0 0 12px;">These values are pulled from <code>config.js</code> and appear on every printed document. Edit that file to change them globally.</p>
+        <div class="env-row"><div class="k">Company Name</div><div class="v" id="coName">—</div></div>
+        <div class="env-row"><div class="k">Phone</div><div class="v" id="coPhone">—</div></div>
+        <div class="env-row"><div class="k">Address</div><div class="v" id="coAddr">—</div></div>
+        <div class="env-row"><div class="k">Email</div><div class="v" id="coEmail">—</div></div>
+        <div class="env-row"><div class="k">Website</div><div class="v" id="coWeb">—</div></div>
+        <div class="env-row"><div class="k">Bank</div><div class="v" id="coBank">—</div></div>
+      </div>
+    </div>
+
+    <!-- Danger -->
+    <div class="card danger-zone">
+      <h3 class="card-h">⚠️ Danger Zone</h3>
+      <p class="mb-1" style="font-size:13px;">Local browser data only. Cloud copies (if configured) remain untouched.</p>
+      <button class="btn btn-danger btn-sm" id="clearLocal" type="button">🗑 Clear ALL local documents</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+const { CFG, Store, GitHub, Sheets, Toast, escapeHTML, Clipboard } = AkijApp;
+AkijApp.mountShell({ active: "settings", title: "Settings", crumb: "Cloud & Configuration" });
+
+/* ========== GitHub ========== */
+function refreshGhBadge() {
+  const c = GitHub.creds();
+  const el = document.getElementById("ghBadge");
+  if (c) {
+    el.className = "badge badge-ok";
+    el.textContent = `✓ ${c.owner}/${c.repo}`;
+  } else {
+    el.className = "badge badge-local";
+    el.textContent = "Not configured";
+  }
+}
+function loadGh() {
+  const c = GitHub.creds() || {};
+  document.getElementById("ghOwner").value  = c.owner  || "";
+  document.getElementById("ghRepo").value   = c.repo   || "";
+  document.getElementById("ghBranch").value = c.branch || "main";
+  document.getElementById("ghBase").value   = c.basePath || "Documents";
+  document.getElementById("ghToken").value  = c.token  || "";
+  refreshGhBadge();
+}
+document.getElementById("ghSave").addEventListener("click", async () => {
+  const creds = {
+    owner:  document.getElementById("ghOwner").value.trim(),
+    repo:   document.getElementById("ghRepo").value.trim(),
+    branch: document.getElementById("ghBranch").value.trim() || "main",
+    basePath: document.getElementById("ghBase").value.trim() || "Documents",
+    token:  document.getElementById("ghToken").value.trim()
+  };
+  if (!creds.owner || !creds.repo || !creds.token) {
+    Toast.show("Owner, repo, and token are required", "error"); return;
+  }
+  const btn = document.getElementById("ghSave");
+  const originalText = btn.textContent;
+  btn.disabled = true; btn.innerHTML = `<span class="loader"></span> Testing…`;
+  try {
+    const test = await GitHub.test(creds);
+    if (!test.ok) { Toast.show("Test failed: " + test.error, "error", 5500); return; }
+    GitHub.save(creds);
+    Toast.show(`Connected to ${test.repo}${test.private ? " (private)" : ""}`, "success");
+    refreshGhBadge();
+  } catch (e) { Toast.show(e.message, "error"); }
+  finally { btn.disabled = false; btn.textContent = originalText; }
+});
+document.getElementById("ghClear").addEventListener("click", () => {
+  if (!confirm("Clear GitHub credentials from this browser?")) return;
+  GitHub.clear();
+  loadGh();
+  Toast.show("Cleared", "info");
+});
+
+/* ========== Google Sheets ========== */
+function refreshGsBadge() {
+  const el = document.getElementById("gsBadge");
+  if (Sheets.isEnabled()) {
+    el.className = "badge badge-ok";
+    el.textContent = "✓ Connected";
+  } else {
+    el.className = "badge badge-local";
+    el.textContent = "Not configured";
+  }
+}
+document.getElementById("gsOpen").href = CFG.SHEET_URL || "#";
+refreshGsBadge();
+
+/* Load & display the Apps Script code for copy */
+const APPS_SCRIPT_CODE = `/**
+ * Akij Holidays — Google Sheets logger
+ * Paste this in Extensions → Apps Script of your Google Sheet,
+ * save, then Deploy → Web app (Anyone can access).
+ */
+const SHEET_ID = "${CFG.SHEET_ID || ""}";
+
+const HEADERS = [
+  "Timestamp", "Type", "ID", "Number", "Status",
+  "Party", "Amount", "Currency", "PNR", "Ticket #",
+  "Route", "Travel Date", "GitHub Path", "Updated At"
+];
+
+function doPost(e) {
+  try {
+    const data = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    _appendRow(data);
+    return _json({ ok: true });
+  } catch (err) { return _json({ ok: false, error: err.message }); }
+}
+
+function doGet() {
+  return _json({ ok: true, service: "Akij Holidays logger", time: new Date().toISOString() });
+}
+
+function _appendRow(data) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const type = String(data.type || "misc");
+  const map = { invoice:"Invoices", voucher:"Vouchers", ticket:"Airline Tickets", ticketInvoice:"Ticket Invoices" };
+  const tabName = map[type] || (type.charAt(0).toUpperCase() + type.slice(1));
+  let sheet = ss.getSheetByName(tabName);
+  if (!sheet) {
+    sheet = ss.insertSheet(tabName);
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, HEADERS.length)
+         .setBackground("#8e011a").setFontColor("#fff").setFontWeight("bold");
+  }
+  const row = [
+    new Date(), type, data.id||"", data.number||"", data.status||"",
+    data.party||"", Number(data.amount)||"", data.currency||"",
+    data.pnr||"", data.ticketNumber||"", data.route||"", data.travelDate||"",
+    data.githubPath||"", data.updatedAt||""
+  ];
+  sheet.appendRow(row);
+
+  // De-dupe by ID: remove any earlier row with same ID
+  if (data.id) {
+    const last = sheet.getLastRow();
+    if (last > 2) {
+      const values = sheet.getRange(2, 3, last - 2, 1).getValues();
+      for (let i = 0; i < values.length; i++) {
+        if (values[i][0] === data.id) { sheet.deleteRow(i + 2); break; }
+      }
+    }
+  }
+}
+
+function _json(o) {
+  return ContentService.createTextOutput(JSON.stringify(o))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+document.getElementById("gsCode").textContent = APPS_SCRIPT_CODE;
+
+document.getElementById("gsCopyScript").addEventListener("click", async () => {
+  const ok = await Clipboard.writeText(APPS_SCRIPT_CODE);
+  Toast.show(ok ? "Script copied — paste it into Apps Script now" : "Copy failed", ok ? "success" : "error", 3500);
+});
+document.getElementById("gsToggleCode").addEventListener("click", () => {
+  const pre = document.getElementById("gsCode");
+  pre.style.display = pre.style.display === "none" ? "block" : "none";
+});
+
+/* ========== Company ========== */
+const co = CFG.COMPANY || {}, bk = CFG.BANK || {};
+document.getElementById("coName").textContent  = co.name  || "—";
+document.getElementById("coPhone").textContent = co.phone || "—";
+document.getElementById("coAddr").textContent  = [co.address1, co.address2].filter(Boolean).join(", ") || "—";
+document.getElementById("coEmail").textContent = co.email || "—";
+document.getElementById("coWeb").textContent   = co.website || "—";
+document.getElementById("coBank").textContent  = bk.name ? `${bk.name} · A/C ${bk.number || ""}` : "—";
+
+/* ========== Danger ========== */
+document.getElementById("clearLocal").addEventListener("click", () => {
+  if (!confirm("Delete ALL local documents from this browser? Cloud copies remain.")) return;
+  Store.clear();
+  Toast.show("Cleared local documents", "success");
+});
+
+loadGh();
+</script>
+</body>
+</html>

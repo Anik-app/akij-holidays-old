@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Akij Holidays — enterprise travel document management" />
+<title>Akij Holidays — Travel Management System</title>
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    background: linear-gradient(135deg, #8e011a 0%, #b0032a 55%, #d81a3f 100%);
+    color: #fff;
+    border-radius: var(--radius-lg);
+    padding: 30px 34px;
+    margin-bottom: 22px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    pointer-events: none;
+  }
+  .hero::before { width: 260px; height: 260px; top: -80px; right: -60px; }
+  .hero::after  { width: 180px; height: 180px; bottom: -60px; left: 20%; }
+  .hero h1 { margin: 0 0 6px; font-size: 26px; font-weight: 700; letter-spacing: -.02em; position: relative; z-index: 1; line-height: 1.15; }
+  .hero p  { margin: 0; opacity: .93; font-size: 14px; max-width: 620px; position: relative; z-index: 1; line-height: 1.55; }
+  .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .hero .btn { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(4px); }
+  .hero .btn:hover { background: rgba(255,255,255,.25); color: #fff; }
+  .hero .btn.btn-white { background: #fff; color: #8e011a; border: 1px solid #fff; font-weight: 600; }
+  .hero .btn.btn-white:hover { background: #fff; opacity: .93; color: #8e011a; }
+  @media (max-width: 720px) { .hero { grid-template-columns: 1fr; padding: 22px; } }
+
+  /* ---- Stats grid ---- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow-xs);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  .stat-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .stat-icon.c1 { background: rgba(0,74,173,.13); color: #004aad; }
+  .stat-icon.c2 { background: rgba(142,1,26,.13); color: #8e011a; }
+  .stat-icon.c3 { background: rgba(15,157,88,.14); color: #0f9d58; }
+  .stat-icon.c4 { background: rgba(245,159,0,.15); color: #b57900; }
+  .stat-icon.c5 { background: rgba(124,58,237,.14); color: #6d28d9; }
+  .stat-icon.c6 { background: rgba(2,132,199,.14); color: #0369a1; }
+  .stat-body { min-width: 0; flex: 1; }
+  .stat-label { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; font-weight: 600; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .stat-sub { font-size: 11.5px; color: var(--text-soft); margin-top: 2px; }
+
+  /* ---- Two-column layout ---- */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  @media (max-width: 980px) { .home-grid { grid-template-columns: 1fr; } }
+
+  /* ---- Quick tiles ---- */
+  .quick-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .quick-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 14px 14px 12px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    cursor: pointer;
+  }
+  .quick-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--primary);
+    text-decoration: none;
+  }
+  .quick-tile .qt-icon { font-size: 24px; line-height: 1; margin-bottom: 4px; }
+  .quick-tile .qt-title { font-weight: 600; font-size: 13.5px; line-height: 1.3; }
+  .quick-tile .qt-sub { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ---- Recent list ---- */
+  .recent-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 4px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .recent-item:last-child { border-bottom: none; }
+  .recent-item .ri-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: grid; place-items: center;
+    background: var(--surface-2);
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .recent-item .ri-body { flex: 1; min-width: 0; }
+  .recent-item .ri-title {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .recent-item .ri-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+  .recent-item .ri-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .recent-item a.ri-open {
+    color: var(--accent);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .recent-item a.ri-open:hover { background: var(--accent-soft); text-decoration: none; }
+
+  /* ---- Cloud status ---- */
+  .status-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+    gap: 10px;
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-row .name { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+  .status-row .name .ico {
+    width: 30px; height: 30px;
+    background: var(--surface-2);
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 15px;
+  }
+
+  .card h3 {
+    margin: 0 0 12px;
+    font-size: 14.5px;
+    color: var(--text);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 .sub { font-weight: 400; font-size: 12px; color: var(--text-muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<div id="mainOutlet">
+  <div class="hero">
+    <div>
+      <h1>Welcome to Akij Holidays 🌴</h1>
+      <p>Enterprise-grade travel documentation — invoices, vouchers, receipts, quotations, tickets & visas. Local-first storage with optional GitHub cloud sync and Google Sheets logging.</p>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-white" href="invoice.html">🧾 New Invoice</a>
+      <a class="btn" href="ticket.html">✈️ New Ticket</a>
+      <a class="btn" href="documents.html">📚 All Documents</a>
+    </div>
+  </div>
+
+  <div class="stats" id="statsGrid" aria-label="Statistics"></div>
+
+  <div class="home-grid">
+    <div class="card">
+      <h3>⚡ Quick Create <span class="sub">create any document type</span></h3>
+      <div class="quick-tiles" id="quickTiles"></div>
+    </div>
+
+    <div class="card">
+      <h3>🕐 Recent Documents <span class="sub">latest 8</span></h3>
+      <div id="recentList"></div>
+    </div>
+  </div>
+
+  <div class="card mt-2">
+    <h3>☁️ Cloud &amp; Sync Status</h3>
+    <div class="status-panel">
+      <div class="status-row">
+        <div class="name"><span class="ico">☁️</span> GitHub Cloud Storage</div>
+        <div class="value" id="statusGithub"><span class="badge badge-local">Not configured</span></div>
+      </div>
+      <div class="status-row">
+        <div class="name"><span class="ico">📊</span> Google Sheets Logger</div>
+        <div class="value" id="statusSheets"><span class="badge badge-local">Not configured</span></div>
+      </div>
+      <div class="status-row">
+        <div class="name"><span class="ico">💾</span> Local Storage</div>
+        <div class="value"><span class="badge badge-ok">✓ Active</span></div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <a class="btn btn-ghost btn-sm" href="settings.html">⚙️ Configure Cloud Sync</a>
+      <div class="spacer"></div>
+      <span class="text-muted" style="font-size:12px;">Configure GitHub to enable cross-device sync of every document.</span>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+const { CFG, Store, Sheets, GitHub, Toast, escapeHTML, formatMoney, formatDate, formatDateTime } = AkijApp;
+AkijApp.mountShell({ active: "dashboard", title: "Dashboard", crumb: "Home", showSearch: true });
+
+/* ---- Stats ---- */
+function renderStats() {
+  const all = Store.all();
+  const invoices = all.filter(d => d.type === "invoice");
+  const revenue  = invoices.filter(d => (d.status || "").toLowerCase() === "paid")
+                           .reduce((s, d) => s + (Number(d.total) || 0), 0);
+  const outstanding = invoices.filter(d => ["sent","overdue","draft"].includes((d.status || "").toLowerCase()))
+                           .reduce((s, d) => s + (Number(d.total) || 0), 0);
+  const cards = [
+    { icon: "📄", cls: "c1", label: "Total Documents", value: all.length,                       sub: `across ${new Set(all.map(d => d.type)).size || 0} types` },
+    { icon: "🧾", cls: "c2", label: "Invoices",         value: invoices.length,                 sub: "created" },
+    { icon: "✈️", cls: "c6", label: "Tickets",          value: all.filter(d => d.type === "ticket").length, sub: "issued" },
+    { icon: "💰", cls: "c3", label: "Revenue (Paid)",   value: formatMoney(revenue, "BDT"),     sub: "invoices marked Paid" },
+    { icon: "⏳", cls: "c4", label: "Outstanding",      value: formatMoney(outstanding, "BDT"), sub: "sent / overdue / draft" },
+    { icon: "🎫", cls: "c5", label: "Bookings",         value: all.filter(d => d.type === "voucher").length, sub: "vouchers" }
+  ];
+  document.getElementById("statsGrid").innerHTML = cards.map(c =>
+    `<div class="stat">
+       <div class="stat-icon ${c.cls}" aria-hidden="true">${c.icon}</div>
+       <div class="stat-body">
+         <div class="stat-label">${escapeHTML(c.label)}</div>
+         <div class="stat-value">${escapeHTML(String(c.value))}</div>
+         <div class="stat-sub">${escapeHTML(c.sub)}</div>
+       </div>
+     </div>`).join("");
+}
+
+/* ---- Quick tiles ---- */
+function renderQuick() {
+  const tiles = [
+    { href: "invoice.html",        icon: "🧾", title: "Invoice",         sub: "line items, taxes, totals" },
+    { href: "voucher.html",        icon: "🎫", title: "Booking Voucher", sub: "hotels, guests, stays" },
+    { href: "ticket.html",         icon: "✈️", title: "Airline Ticket",  sub: "PNR, barcode, QR + PDF import" },
+    { href: "ticket-invoice.html", icon: "🛫", title: "Ticket Invoice",  sub: "fare + tax + VAT" },
+    { href: "documents.html",      icon: "📚", title: "All Documents",   sub: "search, filter, restore" }
+  ];
+  document.getElementById("quickTiles").innerHTML = tiles.map(t =>
+    `<a class="quick-tile" href="${t.href}">
+       <div class="qt-icon" aria-hidden="true">${t.icon}</div>
+       <div class="qt-title">${escapeHTML(t.title)}</div>
+       <div class="qt-sub">${escapeHTML(t.sub)}</div>
+     </a>`).join("");
+}
+
+/* ---- Recent list ---- */
+function typeLabel(t) { return CFG.DOC_TYPES?.[t]?.label || t; }
+function typeIcon(t)  { return CFG.DOC_TYPES?.[t]?.icon  || "📄"; }
+function pageFor(t) {
+  const map = { invoice: "invoice.html", voucher: "voucher.html", ticket: "ticket.html", ticketInvoice: "ticket-invoice.html" };
+  return map[t] || "documents.html";
+}
+function paramFor(d) {
+  const party = d.clientName || d.guestName || d.paidBy || d.applicantName || (d.passengers && d.passengers[0]?.name) || "";
+  const amount = (typeof d.total === "number" && d.total > 0) ? formatMoney(d.total, d.currency)
+                 : (typeof d.amount === "number" && d.amount > 0) ? formatMoney(d.amount, d.currency) : "";
+  return { party, amount };
+}
+function renderRecent() {
+  const list = Store.all()
+    .sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0))
+    .slice(0, 8);
+  const host = document.getElementById("recentList");
+  if (!list.length) {
+    host.innerHTML = `<div class="empty" style="padding:26px 10px;">
+      <div class="empty-icon">📄</div>
+      <h3>No documents yet</h3>
+      <p>Start by creating your first invoice, ticket, or voucher.</p>
+    </div>`;
+    return;
+  }
+  host.innerHTML = list.map(d => {
+    const { party, amount } = paramFor(d);
+    const date = d.invoiceDate || d.receiptDate || d.quoteDate || d.docDate || d.updatedAt;
+    return `<div class="recent-item">
+      <div class="ri-icon" aria-hidden="true">${typeIcon(d.type)}</div>
+      <div class="ri-body">
+        <div class="ri-title">${escapeHTML(d.number || d.id)} <span class="text-muted" style="font-weight:400;font-size:12.5px;">· ${escapeHTML(typeLabel(d.type))}</span></div>
+        <div class="ri-sub">
+          ${party ? `<span>${escapeHTML(party)}</span>` : ""}
+          ${amount ? `<span style="color:var(--primary);font-weight:600;">${escapeHTML(amount)}</span>` : ""}
+          <span>${escapeHTML(formatDate(date))}</span>
+          ${d.githubPath ? `<span class="badge badge-synced">✓ Synced</span>` : ""}
+        </div>
+      </div>
+      <div class="ri-actions">
+        <a class="ri-open" href="${pageFor(d.type)}?id=${encodeURIComponent(d.id)}">Open →</a>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ---- Cloud status badges ---- */
+function renderCloudStatus() {
+  const s = document.getElementById("statusSheets");
+  if (Sheets.isEnabled()) { s.innerHTML = `<span class="badge badge-ok">✓ Connected</span>`; }
+  const g = document.getElementById("statusGithub");
+  if (GitHub.isEnabled()) { g.innerHTML = `<span class="badge badge-cloud">✓ Connected</span>`; }
+}
+
+/* ---- Global topbar search ---- */
+const searchNav = (q) => {
+  q = (q || "").trim();
+  if (q.length < 2) return;
+  location.href = "documents.html?q=" + encodeURIComponent(q);
+};
+document.addEventListener("keydown", (e) => {
+  if (e.target && e.target.id === "globalSearch" && e.key === "Enter") {
+    e.preventDefault(); searchNav(e.target.value);
+  }
+});
+
+renderStats();
+renderQuick();
+renderRecent();
+renderCloudStatus();
+</script>
+</body>
+</html>
