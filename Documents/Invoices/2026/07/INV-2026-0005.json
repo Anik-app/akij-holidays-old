@@ -1,0 +1,37 @@
+{
+  "id": "invoice_mrpbi44i_avwphr",
+  "type": "invoice",
+  "number": "INV-2026-0005",
+  "currency": "BDT",
+  "invoiceDate": "2026-07-17",
+  "dueDate": "2026-07-24",
+  "status": "Draft",
+  "clientName": "engonaerio",
+  "clientCompany": "",
+  "clientAddress": "",
+  "clientCity": "",
+  "clientEmail": "",
+  "clientPhone": "",
+  "items": [
+    {
+      "description": "dnglnadg",
+      "quantity": 1,
+      "rate": 3443330,
+      "amount": 3443330
+    }
+  ],
+  "subtotal": 3443330,
+  "taxRate": 0,
+  "taxAmount": 0,
+  "discount": 0,
+  "shipping": 0,
+  "total": 3443330,
+  "bankName": "BRAC Bank PLC",
+  "accountName": "AKIJ LOGISTICS LTD",
+  "accountNumber": "2063890780001",
+  "branchName": "Gulshan",
+  "routingNumber": "060261726",
+  "notes": "",
+  "createdAt": "2026-07-17T19:15:08.514Z",
+  "updatedAt": "2026-07-17T19:17:00.524Z"
+}
