@@ -1,0 +1,56 @@
+{
+  "id": "ticket_mrp93bha_jqwzlb",
+  "type": "ticket",
+  "number": "TKT-2026-0701",
+  "pnr": "BIBIIN",
+  "ticketNumber": "45678654",
+  "bookingRef": "",
+  "status": "Confirmed",
+  "airline": {
+    "iata": "AC",
+    "icao": "ACA",
+    "name": "Air Canada",
+    "country": "Canada"
+  },
+  "flightNumber": "",
+  "class": "Economy",
+  "cabin": "Y — Economy",
+  "fareBasis": "",
+  "baggage": "",
+  "meal": "",
+  "departure": {
+    "iata": "JED",
+    "icao": "OEJN",
+    "name": "King Abdulaziz International Airport",
+    "city": "Jeddah",
+    "country": "Saudi Arabia"
+  },
+  "departDate": "2026-07-20",
+  "departTime": "04:06",
+  "departTerminal": "",
+  "departGate": "",
+  "arrival": {
+    "iata": "YYZ",
+    "icao": "CYYZ",
+    "name": "Toronto Pearson International Airport",
+    "city": "Toronto",
+    "country": "Canada"
+  },
+  "arriveDate": "2026-07-30",
+  "arriveTime": "09:06",
+  "arriveTerminal": "",
+  "passengers": [
+    {
+      "name": "kjbkjbkjbkj",
+      "type": "ADT",
+      "passport": "",
+      "nationality": "",
+      "dob": "",
+      "seat": ""
+    }
+  ],
+  "notes": "bigugugiuuk",
+  "terms": "",
+  "createdAt": "2026-07-17T18:07:38.974Z",
+  "updatedAt": "2026-07-17T18:49:37.223Z"
+}
