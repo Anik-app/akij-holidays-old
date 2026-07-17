@@ -1,0 +1,43 @@
+{
+  "id": "invoice_mrpapfep_nbhz4l",
+  "type": "invoice",
+  "number": "INV-2026-0004",
+  "currency": "BDT",
+  "invoiceDate": "2026-07-17",
+  "dueDate": "2026-07-24",
+  "status": "Sent",
+  "clientName": "wsdfghfd",
+  "clientCompany": "dsssssfdf",
+  "clientAddress": "dssssssssss",
+  "clientCity": "",
+  "clientEmail": "",
+  "clientPhone": "",
+  "items": [
+    {
+      "description": "dsdsddas",
+      "quantity": 1,
+      "rate": 234320,
+      "amount": 234320
+    },
+    {
+      "description": "rweretretre",
+      "quantity": 1,
+      "rate": 2453340,
+      "amount": 2453340
+    }
+  ],
+  "subtotal": 2687660,
+  "taxRate": 0,
+  "taxAmount": 0,
+  "discount": 0,
+  "shipping": 0,
+  "total": 2687660,
+  "bankName": "BRAC Bank PLC",
+  "accountName": "AKIJ LOGISTICS LTD",
+  "accountNumber": "2063890780001",
+  "branchName": "Gulshan",
+  "routingNumber": "060261726",
+  "notes": "",
+  "createdAt": "2026-07-17T18:52:50.113Z",
+  "updatedAt": "2026-07-17T18:52:50.114Z"
+}
