@@ -1,0 +1,39 @@
+{
+  "id": "voucher_mrp8xnig_u4tjxz",
+  "type": "voucher",
+  "number": "BK-2026-0701",
+  "service": "",
+  "bookingStatus": "Confirmed",
+  "guestName": "dknlksglsd",
+  "guestPhone": "sdlgmksdg",
+  "guestEmail": "sdgjbslkglnsdk",
+  "adults": 2,
+  "children": 0,
+  "infants": 0,
+  "arrival": "2026-07-17",
+  "departure": "2026-07-19",
+  "nights": 2,
+  "rooms": 1,
+  "roomCategory": "sdgs",
+  "mealPlan": "",
+  "hotels": [
+    {
+      "name": "dsgsdgnlsndgks",
+      "city": "sdlgblsjdbgls",
+      "country": "sdgnlskdgnlks",
+      "address": "",
+      "stars": 0,
+      "confirmation": "asfbasjkl",
+      "rooms": "2nlkdnls",
+      "roomType": "dxl",
+      "mealPlan": "Bed & Breakfast (BB)",
+      "checkIn": "",
+      "checkOut": "",
+      "phone": "sdnglksnglks"
+    }
+  ],
+  "note": "lksnfglknslkagn",
+  "terms": "",
+  "createdAt": "2026-07-17T18:03:14.632Z",
+  "updatedAt": "2026-07-17T19:18:18.151Z"
+}
