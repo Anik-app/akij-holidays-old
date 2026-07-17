@@ -1,0 +1,39 @@
+{
+  "id": "voucher_mrp9b99g_sgvoj3",
+  "type": "voucher",
+  "number": "BK-2026-0702",
+  "service": "",
+  "bookingStatus": "Confirmed",
+  "guestName": "dfghjk",
+  "guestPhone": "09876543234",
+  "guestEmail": "",
+  "adults": 1,
+  "children": 0,
+  "infants": 0,
+  "arrival": "2026-07-17",
+  "departure": "2026-07-19",
+  "nights": 2,
+  "rooms": 1,
+  "roomCategory": "",
+  "mealPlan": "",
+  "hotels": [
+    {
+      "name": "ghjkjhgjfj",
+      "city": "",
+      "country": "",
+      "address": "",
+      "stars": 0,
+      "confirmation": "",
+      "rooms": "",
+      "roomType": "",
+      "mealPlan": "",
+      "checkIn": "",
+      "checkOut": "",
+      "phone": ""
+    }
+  ],
+  "note": "",
+  "terms": "",
+  "createdAt": "2026-07-17T18:13:49.348Z",
+  "updatedAt": "2026-07-17T18:49:26.487Z"
+}
